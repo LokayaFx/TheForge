@@ -1,0 +1,49 @@
+# ============================================================
+#  TheForge - main configuration
+# ============================================================
+
+# How many forge slots a player can use at max level.
+# Per-slot unlock conditions (Forge level and/or AuraSkills/EcoSkills levels)
+# are configured in slots.yml.
+max-slots: 7
+
+# Forge levels are driven by Forge XP.
+# Completed recipes grant XP (recipe `experience`, defaulting to its time
+# in seconds). The value below is the cumulative XP required to reach
+# that level. Level 1 always starts at 0.
+levels:
+  2: 1200      # 20 minutes worth of XP
+  3: 2400      # 40 minutes
+  4: 3600      # 60 minutes
+  5: 7200      # 120 minutes
+  6: 10800     # 180 minutes
+  7: 14400     # 240 minutes
+
+# Time reduction applied when a job STARTS.
+# 0.10 = 10% faster. Level-ups never change jobs that are already running.
+reductions:
+  1: 0.0
+  2: 0.10
+  3: 0.20
+  4: 0.30
+  5: 0.40
+  6: 0.50
+  7: 0.60
+
+forge:
+  # A completed job grants the recipe's `experience` value as Forge XP.
+  # If a recipe does not set `experience`, its base time in seconds is used.
+  # Recipe and category `required-level` fields gate what players can forge.
+
+  # How often the plugin checks running jobs (in ticks). 20 ticks = 1 second.
+  check-interval-ticks: 20
+
+logging:
+  # Job starts, completions, claims and level-ups.
+  gameplay: true
+  # Reload, settime, setlevel and recipe/category changes.
+  admin: true
+  # Extra detail for troubleshooting (player data loads/saves).
+  debug: false
+
+# Messages are stored in messages.yml.

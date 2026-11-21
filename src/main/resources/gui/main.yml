@@ -1,0 +1,82 @@
+# Customize button slots, materials, names and lore here.
+# Lore/name placeholders are replaced when the menu is shown.
+# PLAYER_HEAD supports `owner: PlayerName` or `texture: Base64-or-texture-URL`.
+# Example custom head:
+# categories:
+#   slot: 53
+#   material: PLAYER_HEAD
+#   owner: Notch
+#   # Or use a custom Minecraft head texture:
+#   # texture: "Base64_TEXTURE_VALUE_OR_TEXTURE_URL"
+#   name: "&6Categories"
+#   lore:
+#     - "&eClick to browse categories"
+title: "&8The Forge"
+slots:
+  forge: [10, 11, 12, 13, 14, 15, 16]
+  # Three progress panes for every forge slot: 50%, 75%, then 100%.
+  # Forge slot 1 uses 19, 28 and 37. Forge slot 7 uses 25, 34 and 43.
+  progress: [19, 20, 21, 22, 23, 24, 25, 28, 29, 30, 31, 32, 33, 34, 37, 38, 39, 40, 41, 42, 43]
+items:
+  filler:
+    material: GRAY_STAINED_GLASS_PANE
+    name: " "
+    lore: []
+  milestone:
+    slot: 48
+    material: KNOWLEDGE_BOOK
+    name: "&6&lForge Milestone"
+    lore:
+      - "&7Forge XP: &e{xp}"
+      - "&7Next level: &e{next} &7({percent}%)"
+      - "{bar} &e{progress}"
+      - "&7Time reduction: &e{reduction}%"
+      - "&7Slots: &e{used}&7/&e{slots}"
+      - ""
+      - "&7View all Forge Recipes and their"
+      - "&7requirements to unlock."
+      - ""
+      - "&fRecipe Book Unlocked: &e{unlocked-percent}%"
+      - "{unlocked-bar} &e{unlocked}/{total}"
+      - ""
+      - "&eClick to view!"
+  empty-slot:
+    material: FURNACE
+    name: "&aSlot #{slot}"
+    lore:
+      - "&7Empty"
+      - "&eClick to choose a recipe"
+  locked-slot:
+    material: SMOKER
+    name: "&cSlot #{slot} (Locked)"
+    lore:
+      - "&7Unlocks at Forge Level &e{level}"
+  progress-pending:
+    material: RED_STAINED_GLASS_PANE
+    name: " "
+    lore: []
+  progress-complete:
+    material: GREEN_STAINED_GLASS_PANE
+    name: " "
+    lore: []
+  active-slot:
+    lore:
+      - "&7Recipe: &f{recipe}"
+      - "&7Time left: &e{time}"
+      - "&7Progress: &e{progress}%"
+  completed-slot:
+    lore:
+      - "&aReady to claim!"
+      - "&eClick to claim"
+  collect-all:
+    slot: 49
+    material: HOPPER
+    name: "&aClaim All"
+    lore:
+      - "&7Ready items: &e{count}"
+      - "&eClick to claim everything"
+  close:
+    slot: 50
+    material: BARRIER
+    name: "&cClose"
+    lore: []

@@ -1,0 +1,44 @@
+# ============================================================
+#  TheForge - forge slot unlock requirements
+# ============================================================
+#
+# A slot unlocks only when ALL of its requirements are met.
+# Slots that are not listed here default to requiring Forge Level = slot number.
+#
+# Supported requirements:
+#   required-level: <number>     Forge level needed for this slot.
+#   aureliumskills:              AuraSkills / AureliumSkills levels.
+#     <skill-id>: <level>
+#   ecoskills:                   EcoSkills levels.
+#     <skill-id>: <level>
+#
+# Skill IDs are the lowercase ids used by the skill plugin (for example
+# farming, mining, foraging). AuraSkills custom skills can use namespace:id.
+#
+# Example: slot 4 needs Forge Level 4 AND AuraSkills farming 10.
+#  4:
+#    required-level: 4
+#    aureliumskills:
+#      farming: 10
+#
+# Example: slot 5 needs Forge Level 5 AND EcoSkills mining 15.
+#  5:
+#    required-level: 5
+#    ecoskills:
+#      mining: 15
+
+slots:
+  1:
+    required-level: 1
+  2:
+    required-level: 2
+  3:
+    required-level: 3
+  4:
+    required-level: 4
+  5:
+    required-level: 5
+  6:
+    required-level: 6
+  7:
+    required-level: 7

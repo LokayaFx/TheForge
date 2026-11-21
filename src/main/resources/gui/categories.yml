@@ -1,0 +1,52 @@
+# Customize category menu slots, materials, names and lore here.
+# PLAYER_HEAD sample: set `material: PLAYER_HEAD` and then add either
+# `owner: PlayerName` or `texture: "Base64_TEXTURE_VALUE_OR_TEXTURE_URL"`.
+title: "&8Categories"
+slots:
+  categories: [10, 11, 12, 13, 14, 15, 16]
+items:
+  filler:
+    material: GRAY_STAINED_GLASS_PANE
+    name: " "
+    lore: []
+  header:
+    slot: 4
+    material: CHEST
+    name: "&6Categories"
+    lore:
+      - "&7Selected forge slot: &e{slot}"
+  empty:
+    slot: 13
+    material: BARRIER
+    name: "&7Nothing here yet"
+    lore: []
+  category-entry:
+    name: "&e{name}"
+    lore:
+      - "&7Recipes: &e{count}"
+      - "&eClick to browse"
+  previous:
+    slot: 18
+    material: ARROW
+    name: "&ePrevious Page"
+    lore: []
+  back:
+    slot: 22
+    material: ARROW
+    name: "&eBack"
+    lore: []
+  page:
+    slot: 24
+    material: PAPER
+    name: "&7Page {page}/{pages}"
+    lore: []
+  next:
+    slot: 25
+    material: ARROW
+    name: "&eNext Page"
+    lore: []
+  close:
+    slot: 26
+    material: BARRIER
+    name: "&cClose"
+    lore: []

@@ -1,0 +1,171 @@
+package lk.cwresports.theforge.config;
+
+import lk.cwresports.theforge.TheForgePlugin;
+import org.bukkit.Material;
+import org.bukkit.configuration.file.YamlConfiguration;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+/** Loads the per-menu title and item-material customization files. */
+public final class GuiConfig {
+
+    private final TheForgePlugin plugin;
+    private final Map<String, YamlConfiguration> menus = new HashMap<>();
+
+    public GuiConfig(TheForgePlugin plugin) {
+        this.plugin = plugin;
+        reload();
+    }
+
+    public void reload() {
+        menus.clear();
+        for (String menu : new String[]{"main", "categories", "recipes"}) {
+            String resource = "gui/" + menu + ".yml";
+            File file = new File(plugin.getDataFolder(), resource);
+            if (!file.exists()) {
+                plugin.saveResource(resource, false);
+            }
+            YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
+            if (menu.equals("main") && migrateMainLayout(config, file)) {
+                try {
+                    config.save(file);
+                    plugin.getLogger().info("Updated the main forge GUI to seven furnace slots.");
+                } catch (IOException exception) {
+                    plugin.getLogger().warning("Could not update gui/main.yml: " + exception.getMessage());
+                }
+            }
+            menus.put(menu, config);
+        }
+    }
+
+    public String title(String menu, String fallback) {
+        return get(menu, "title", fallback);
+    }
+
+    public Material material(String menu, String item, Material fallback) {
+        String value = get(menu, "items." + item + ".material",
+                get(menu, "materials." + item, fallback.name()));
+        Material material = Material.matchMaterial(value);
+        return material == null || material.isAir() ? fallback : material;
+    }
+
+    public int slot(String menu, String item, int fallback) {
+        YamlConfiguration config = menus.get(menu);
+        if (config == null) return fallback;
+        int slot = config.getInt("items." + item + ".slot", fallback);
+        int size = menu.equals("categories") ? 27 : 54;
+        return slot >= 0 && slot < size ? slot : fallback;
+    }
+
+    public int[] slots(String menu, String key, int[] fallback) {
+        YamlConfiguration config = menus.get(menu);
+        if (config == null || !config.isList("slots." + key)) return fallback.clone();
+        List<Integer> values = config.getIntegerList("slots." + key);
+        if (values.size() != fallback.length) return fallback.clone();
+        int size = menu.equals("categories") ? 27 : 54;
+        for (int value : values) {
+            if (value < 0 || value >= size) return fallback.clone();
+        }
+        return values.stream().mapToInt(Integer::intValue).toArray();
+    }
+
+    public String itemName(String menu, String item, String fallback, String... placeholders) {
+        String name = get(menu, "items." + item + ".name", fallback);
+        return replace(name, placeholders);
+    }
+
+    public List<String> itemLore(String menu, String item, List<String> fallback,
+                                 String... placeholders) {
+        YamlConfiguration config = menus.get(menu);
+        List<String> lore = config != null && config.isList("items." + item + ".lore")
+                ? new ArrayList<>(config.getStringList("items." + item + ".lore"))
+                : new ArrayList<>(fallback);
+        return lore.stream().map(line -> replace(line, placeholders)).toList();
+    }
+
+    /** A Minecraft texture URL or Base64 textures property for PLAYER_HEAD items. */
+    public String headTexture(String menu, String item) {
+        return get(menu, "items." + item + ".texture", "");
+    }
+
+    /** A player name used as the owner of a PLAYER_HEAD item. */
+    public String headOwner(String menu, String item) {
+        return get(menu, "items." + item + ".owner", "");
+    }
+
+    public Material fillerMaterial(String menu) {
+        return material(menu, "filler", Material.GRAY_STAINED_GLASS_PANE);
+    }
+
+    public String fillerName(String menu) {
+        return get(menu, "items.filler.name", get(menu, "filler-name", " "));
+    }
+
+    private String get(String menu, String path, String fallback) {
+        YamlConfiguration config = menus.get(menu);
+        return config == null ? fallback : config.getString(path, fallback);
+    }
+
+    private String replace(String text, String... placeholders) {
+        String result = text;
+        for (int index = 0; placeholders != null && index + 1 < placeholders.length; index += 2) {
+            result = result.replace("{" + placeholders[index] + "}", placeholders[index + 1]);
+        }
+        return result;
+    }
+
+    /** Updates the default layout generated by earlier plugin versions. */
+    private boolean migrateMainLayout(YamlConfiguration config, File file) {
+        boolean changed = false;
+        if (config.getIntegerList("slots.forge").equals(List.of(20, 21, 22, 23, 24))) {
+            config.set("slots.forge", List.of(10, 11, 12, 13, 14, 15, 16));
+            changed = true;
+        }
+        if (config.getString("materials.empty-slot", "").equalsIgnoreCase("CAULDRON")) {
+            config.set("materials.empty-slot", "FURNACE");
+            changed = true;
+        }
+        if (config.getString("materials.locked-slot", "").equalsIgnoreCase("BARRIER")) {
+            config.set("materials.locked-slot", "SMOKER");
+            changed = true;
+        }
+        if (config.contains("items.recipe-book")) {
+            config.set("items.recipe-book", null);
+            changed = true;
+        }
+        if (config.contains("items.categories")) {
+            config.set("items.categories", null);
+            changed = true;
+        }
+        if (!config.contains("items.milestone")) {
+            config.set("items.milestone.slot", 48);
+            config.set("items.milestone.material", "KNOWLEDGE_BOOK");
+            config.set("items.milestone.name", "&6&lForge Milestone");
+            config.set("items.milestone.lore", List.of(
+                    "&7Forge XP: &e{xp}",
+                    "&7Next level: &e{next} &7({percent}%)",
+                    "{bar} &e{progress}",
+                    "&7Time reduction: &e{reduction}%",
+                    "&7Slots: &e{used}&7/&e{slots}",
+                    "",
+                    "&7View all Forge Recipes and their",
+                    "&7requirements to unlock.",
+                    "",
+                    "&fRecipe Book Unlocked: &e{unlocked-percent}%",
+                    "{unlocked-bar} &e{unlocked}/{total}",
+                    "",
+                    "&eClick to view!"
+            ));
+            if (config.contains("items.level")) {
+                config.set("items.level", null);
+            }
+            changed = true;
+        }
+        return changed;
+    }
+}

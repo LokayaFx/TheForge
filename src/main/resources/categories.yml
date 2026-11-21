@@ -1,0 +1,144 @@
+﻿# Custom item support:
+#   EcoItems:  ecoitems: <item_id>          (or material: ecoitems:<item_id>)
+#   MMOItems:  mmoitems: <TYPE>:<item_id>   (or mmoitems: <item_id> to search all types)
+#   Legacy:    mmoitems_type: <TYPE> + mmoitems_id: <item_id>
+recipe_categories:
+  # Parts Category
+  parts:
+    display_name: Parts
+    required-level: 1
+    icon:
+      material: IRON_INGOT
+      name: '&7Parts'
+    recipes:
+      iron_pickaxe_head:
+        result:
+          material: IRON_INGOT
+          name: '&fIron Pickaxe Head'
+          amount: 1
+          custom_model_data: 10001
+          lore:
+          - '&7A forged pickaxe head'
+          - '&7Use at a crafting station'
+        time_in_seconds: 3600 # 1 hour
+        ingredients:
+          iron_ingot:
+            material: IRON_INGOT
+            amount: 3
+
+      diamond_sword_blade:
+        result:
+          material: DIAMOND
+          name: '&bDiamond Sword Blade'
+          amount: 1
+          custom_model_data: 10002
+        time_in_seconds: 5400 # 1.5 hours
+        ingredients:
+          diamond:
+            material: DIAMOND
+            amount: 2
+
+  # Ores Category
+  ores:
+    display_name: Ores
+    required-level: 2
+    icon:
+      material: GOLD_ORE
+      name: '&7Ores'
+    recipes:
+      gold_ingot:
+        result:
+          material: GOLD_INGOT
+          name: '&6Gold Ingot'
+          amount: 1
+        time_in_seconds: 1800 # 30 minutes
+        ingredients:
+          raw_gold:
+            material: RAW_GOLD
+            amount: 1
+
+      iron_ingot:
+        result:
+          material: IRON_INGOT
+          name: '&fIron Ingot'
+          amount: 1
+        time_in_seconds: 3600 # 1 hour
+        ingredients:
+          raw_iron:
+            material: RAW_IRON
+            amount: 1
+
+      copper_ingot:
+        result:
+          material: COPPER_INGOT
+          name: '&6Copper Ingot'
+          amount: 1
+        time_in_seconds: 1800 # 30 minutes
+        ingredients:
+          raw_copper:
+            material: RAW_COPPER
+            amount: 1
+
+      netherite_scrap:
+        result:
+          material: NETHERITE_SCRAP
+          name: '&8Netherite Scrap'
+          amount: 1
+        time_in_seconds: 7200 # 2 hours
+        required-level: 3
+        ingredients:
+          ancient_debris:
+            material: ANCIENT_DEBRIS
+            amount: 1
+
+  # Armor Category
+  armor:
+    display_name: Armor
+    required-level: 4
+    icon:
+      material: DIAMOND_CHESTPLATE
+      name: '&7Armor'
+    recipes:
+      iron_helmet:
+        result:
+          material: IRON_HELMET
+          name: '&fForged Iron Helmet'
+          amount: 1
+        time_in_seconds: 2400 # 40 minutes
+        ingredients:
+          iron_ingot:
+            material: IRON_INGOT
+            amount: 5
+
+      iron_chestplate:
+        result:
+          material: IRON_CHESTPLATE
+          name: '&fForged Iron Chestplate'
+          amount: 1
+        time_in_seconds: 3600 # 1 hour
+        ingredients:
+          iron_ingot:
+            material: IRON_INGOT
+            amount: 8
+
+      diamond_chestplate:
+        result:
+          material: DIAMOND_CHESTPLATE
+          name: '&bForged Diamond Chestplate'
+          amount: 1
+        time_in_seconds: 7200 # 2 hours
+        required-level: 5
+        ingredients:
+          diamond:
+            material: DIAMOND
+            amount: 8
+  tools:
+    display_name: tools
+    required-level: 1
+    icon:
+      material: CHEST
+  items:
+    display_name: items
+    required-level: 1
+    icon:
+      material: CHEST

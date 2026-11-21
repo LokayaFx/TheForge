@@ -1,0 +1,27 @@
+# Build output
+target/
+
+# Local Maven distribution/wrapper
+.build-tools/
+
+# IDE / editor
+.idea/
+*.iml
+*.ipr
+*.iws
+.classpath
+.project
+.settings/
+.vscode/
+*.log
+
+# Operating system
+.DS_Store
+Thumbs.db
+
+# Local session/junk files
+opencode.txt
+New Text Document.txt
+
+# Internal spec (not published)
+TheForge-System-Spec.md
