@@ -1,0 +1,22 @@
+name: TheForge
+version: '26.2'
+main: lk.cwresports.theforge.v26.TheForge26Plugin
+api-version: '26.2'
+description: Real-time forging with slots, leveling and custom recipes.
+author: Lokayaa
+website: https://cwresports.lk
+softdepend: [MMOItems, MythicLib, EcoItems, eco, AuraSkills, AureliumSkills, EcoSkills]
+
+commands:
+  forge:
+    description: Open the forge or manage the plugin.
+    usage: /forge help
+    aliases: [tf]
+
+permissions:
+  theforge.use:
+    description: Allows opening the forge GUI and forging items.
+    default: true
+  theforge.admin:
+    description: Allows admin and recipe management commands.
+    default: op

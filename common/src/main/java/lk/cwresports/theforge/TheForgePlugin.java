@@ -15,6 +15,8 @@ import lk.cwresports.theforge.listener.PlayerListener;
 import lk.cwresports.theforge.manager.ForgeManager;
 import lk.cwresports.theforge.manager.PlayerDataManager;
 import lk.cwresports.theforge.manager.RecipeManager;
+import lk.cwresports.theforge.platform.Platform;
+import lk.cwresports.theforge.platform.Platforms;
 import lk.cwresports.theforge.util.Log;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
@@ -23,7 +25,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 
-public final class TheForgePlugin extends JavaPlugin {
+public abstract class TheForgePlugin extends JavaPlugin {
 
     private static TheForgePlugin instance;
 
@@ -40,9 +42,15 @@ public final class TheForgePlugin extends JavaPlugin {
         return instance;
     }
 
+    /**
+     * Creates the adapter for the server version this jar was built for.
+     */
+    protected abstract Platform createPlatform();
+
     @Override
     public void onEnable() {
         instance = this;
+        Platforms.set(createPlatform());
         long started = System.currentTimeMillis();
 
         Log.info("========================================");

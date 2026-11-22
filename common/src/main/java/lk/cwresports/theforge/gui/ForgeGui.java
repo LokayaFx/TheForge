@@ -9,6 +9,7 @@ import lk.cwresports.theforge.model.ForgeRecipe;
 import lk.cwresports.theforge.model.Ingredient;
 import lk.cwresports.theforge.model.PlayerData;
 import lk.cwresports.theforge.model.SlotRequirement;
+import lk.cwresports.theforge.platform.Platforms;
 import lk.cwresports.theforge.util.Text;
 import lk.cwresports.theforge.util.TimeUtil;
 import net.kyori.adventure.text.Component;
@@ -464,10 +465,10 @@ public final class ForgeGui {
             }
             lore.addAll(Text.lore(extraLore));
             meta.lore(lore);
-            if (glow) {
-                meta.setEnchantmentGlintOverride(true);
-            }
         });
+        if (glow) {
+            Platforms.get().applyGlow(stack);
+        }
         return stack;
     }
 

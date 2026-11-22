@@ -1,7 +1,7 @@
 name: TheForge
 version: '26.2'
-main: lk.cwresports.theforge.TheForgePlugin
-api-version: '26.2'
+main: lk.cwresports.theforge.v1_19.TheForge119Plugin
+api-version: '1.19'
 description: Real-time forging with slots, leveling and custom recipes.
 author: Lokayaa
 website: https://cwresports.lk

@@ -1,18 +1,51 @@
 # TheForge
 
-Real-time forging plugin for **Paper 26.2** (Java 25).
+Real-time forging plugin for **Paper 1.18.2 through 26.2**.
 
 Author: **Lokayaa** · https://cwresports.lk
 
 Forge items over real time, even while offline. Slots, levels and
 custom recipes/categories, all through one GUI.
 
+## Project layout
+
+This is a Maven multi-module build:
+
+| Module | Target | Java | Output |
+| --- | --- | --- | --- |
+| `common` | Shared plugin logic, compiled against Paper 1.18.2 | 17 | `common/target/TheForge-Common-26.2.jar` |
+| `v1_18` | Paper 1.18.2 | 17 | `v1_18/target/TheForge-1.18.2.jar` |
+| `v1_19` | Paper 1.19.x | 17 | `v1_19/target/TheForge-1.19.4.jar` |
+| `v1_20` | Paper 1.20.x | 17 | `v1_20/target/TheForge-1.20.4.jar` |
+| `v1_21` | Paper 1.21.x | 21 | `v1_21/target/TheForge-1.21.jar` |
+| `v26` | Paper 26.2 | 25 | `v26/target/TheForge-26.2.jar` |
+
+`common` holds the code and default configs. Each version module only adds
+a small platform adapter (`GlowPlatform`) and its `plugin.yml`, then shades
+`common` into the final jar. `common` targets the oldest supported API so
+the shared code compiles for every server version. Only the version jars are
+installable; `TheForge-Common` is a library.
+
+The version modules are compiled against the oldest API of their line
+(1.19.4, 1.20.4 and 1.21) so each jar runs across its whole series. The
+`v1_18` jar still works as a fallback on 1.19-1.21, but the dedicated jars
+are recommended. The `v26` jar is only for **26.2+**.
+
 ## Install
 
-1. Build the jar: `mvn -DskipTests package` (or use `target/TheForge-26.2.jar`).
-2. Drop `TheForge-26.2.jar` into your server's `plugins/` folder.
-3. Start the server (Java 25 + Paper 26.2).
-4. Edit `plugins/TheForge/config.yml`, `categories.yml`, `messages.yml`,
+1. Build all jars: `mvn -DskipTests package`.
+   On Windows without Maven on the PATH, use
+   `.build-tools/apache-maven-3.9.11/bin/mvn.cmd -DskipTests package`.
+2. Pick the jar for your server:
+   * Paper 1.18.2 → `v1_18/target/TheForge-1.18.2.jar`
+   * Paper 1.19.x → `v1_19/target/TheForge-1.19.4.jar`
+   * Paper 1.20.x → `v1_20/target/TheForge-1.20.4.jar`
+   * Paper 1.21.x → `v1_21/target/TheForge-1.21.jar`
+   * Paper 26.2+ → `v26/target/TheForge-26.2.jar`
+3. Drop that jar into your server's `plugins/` folder.
+4. Start the server (Java 17 for 1.18.2-1.20.4, Java 21 for 1.20.5-1.20.6
+   and 1.21.x, Java 25 for 26.2).
+5. Edit `plugins/TheForge/config.yml`, `categories.yml`, `messages.yml`,
    `slots.yml` and the files in `plugins/TheForge/gui/`, then run `/forge reload`.
 
 ## GUI customization
