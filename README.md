@@ -2,7 +2,7 @@
 
 Real-time forging plugin for **Paper 1.18.2 through 26.2**.
 
-Author: **Lokayaa** · https://cwresports.lk
+Author: **Lokayaa** · 
 
 Forge items over real time, even while offline. Slots, levels and
 custom recipes/categories, all through one GUI.
